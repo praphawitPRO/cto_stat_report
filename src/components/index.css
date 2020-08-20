@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'CPN_font';
+  font-style: normal;
+  font-weight: normal;
+  src: 
+    local('CPN_font-Bold'), url(../CPN_font/CPN-Bold.otf) format('otf'),
+    local('CPN_font-Bold2'), url(../CPN_font/CPN-Bold 2.otf) format('otf'),
+    local('CPN_font-BoldCondensed'), url(../CPN_font/CPN-BoldCondensed.otf) format('otf'),
+    local('CPN_font-BoldItalic'), url(../CPN_font/CPN-BoldItalic.otf) format('otf'),
+    local('CPN_font-Compressed'), url(../CPN_font/CPN-Compressed.otf) format('otf'),
+    local('CPN_font-Condensed'), url(../CPN_font/CPN-Condensed.otf) format('otf'),
+    local('CPN_font-ExtraCompressed'), url(../CPN_font/CPN-ExtraCompressed.otf) format('otf'),
+    local('CPN_font-Italic'), url(../CPN_font/CPN-Italic.otf) format('otf'),
+    local('CPN_font-Light'), url(../CPN_font/CPN-Light.otf) format('otf'),
+    local('CPN_font-LightItalic'), url(../CPN_font/CPN-LightItalic.otf) format('otf'),
+    local('CPN_font'), url(../CPN_font/CPN-Regular.otf) format('otf'),
+    local('CPN Bold'), url(../CPN_font/CPN-Bold.ttf) format('truetype');
+}
