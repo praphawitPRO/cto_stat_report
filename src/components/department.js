@@ -221,7 +221,7 @@ const TableDepartment = props => {
 		return (
 			<Paper className={classes.root}>
 				<div className={classes.box_select}>
-					<div className={classes.title}>DATE : </div>
+					<div className={classes.title}>Month : </div>
 					<Select  
 							className={classes.select}
 							styles={selectStyles}
@@ -389,8 +389,8 @@ const TableDepartment = props => {
 										{ title: 'wfh', field: 'wfh' , sorting:false },
 										{ title: 'sick', field: 'sick', sorting:false },
 										{ title: 'other', field: 'other', sorting:false },
-										{ title: 'Check in', field: 'total_check_in', sorting:false },
-										{ title: "Don't Check in", field: 'not_check_in', sorting:false },
+										{ title: 'Checked in', field: 'total_check_in', sorting:false },
+										{ title: "Haven't Checked in", field: 'not_check_in', sorting:false },
 
 								]}
 								data={Data}     

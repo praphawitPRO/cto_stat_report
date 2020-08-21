@@ -8,7 +8,7 @@ function App() {
   const dataLogin = useSelector(state => state.report.dataLogin);
   document.title = 'CTO Work Statistics';
   
-    if(Object.keys(dataLogin).length === 1){
+    if(Object.keys(dataLogin).length === 0){
       return (
         
         <Login />

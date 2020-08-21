@@ -231,7 +231,7 @@ const TableUser = props => {
                             { title: 'E-mail', field: 'user_email' , defaultSort :'asc'   },
                             { title: 'Department', field: 'department', sorting:false  },
                             { title: 'Position', field: 'position', sorting:false  }, 
-                            { title: 'Check in', field: 'check_in' , sorting:false },
+                            { title: 'Checked in', field: 'check_in' , sorting:false },
                             { title: 'Time', field: 'created_at', sorting:false },
                             { title: 'Type', field: 'type', sorting:false },
 
