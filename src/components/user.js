@@ -54,15 +54,6 @@ const TableUser = props => {
     const arrDate = useSelector(state => state.report.arrDate);
     const Data = useSelector(state => state.report.dataUser);
 
-    // const [startDate, setStartDate] = useState(null);
-    // const [endDate, setEndDate] = useState(null);
-    // const onChange = dates => {
-    //   const [start, end] = dates;
-    //   setStartDate(start);
-    //   setEndDate(end);
-    // };
-    
-
     //add date to selector
     let datelist =[];
     arrDate.forEach(element => {
@@ -83,12 +74,10 @@ const TableUser = props => {
     );
     let departlist =[];
     depart.forEach(element => {
-      
       departlist.push({ label: element, value: element}) 
     });  
     let [ selDepart, setSelDepart ] = useState({ label: departlist[0].label, value:departlist[0].value});
 
-    
     useEffect(() => {
       console.log(date.value.toString());
       axios.post('https://ctx-core.central.tech/report-api/public/index.php/user', {
@@ -100,7 +89,6 @@ const TableUser = props => {
       setSelDepart({ label: departlist[0].label, value:departlist[0].value});
     },[date]);
 
-    
     const selectStyles = {
       menu: base => ({
         ...base,

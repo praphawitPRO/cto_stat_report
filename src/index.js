@@ -21,11 +21,13 @@ const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
 const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
 const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
 const date = `${ye}-${mo}-${da}` ;
+const month = `${ye}-${mo}` ;
 
 const initialState={
     dataUser:[],
     dataDepartment:[],
     arrDate:[date],
+    arrMonth:[month],
     dateSelect:'',
     loading: true,
     dataLogin : {},
@@ -51,6 +53,13 @@ const Reducer=(state=initialState,action)=>{
             state={
                 ...state,
                 arrDate:action.payload,
+            }
+        break;
+
+        case "setArrMonth":
+            state={
+                ...state,
+                arrMonth:action.payload,
             }
         break;
 
@@ -110,19 +119,30 @@ store.subscribe(()=>{
     console.log("Update Store: ",store.getState());
 })
 
-function getRepAPI(){
-    const response = axios.get( 'https://ctx-core.central.tech/report-api/public/index.php/date',);
+function getRepAPI(month){
+    const response = axios.post( 'https://ctx-core.central.tech/report-api/public/index.php/date', {
+        month : month
+        });
+    return response ;
+}
+function getRepAPI_month(){
+    const response = axios.get('https://ctx-core.central.tech/report-api/public/index.php/month' );
     return response ;
 }
 
-getRepAPI().then(response => 
+getRepAPI(month).then(response => 
     store.dispatch({
     type:"setArrDate",
     payload:response.data.date
     })
 );
 
-
+getRepAPI_month().then(response => 
+    store.dispatch({
+    type:"setArrMonth",
+    payload:response.data.date
+    })
+);
 
 ReactDOM.render(
   <Provider store={store}>

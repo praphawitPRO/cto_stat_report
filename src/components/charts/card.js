@@ -22,6 +22,34 @@ const useStyles = makeStyles({
     },
     })
 const Chart = props => {
+    const [emp, setEMP] = useState(0); 
+    const [check, setCheck] = useState(""); 
+    const [notCheck, setNotCheck] = useState(""); 
+    useEffect(() => {
+        if(!props.data){
+            return 
+        }
+        let totalEMP = 0;
+        let totalCheck = 0;
+        let totalNotCheck = 0;
+        let NumOfDay = 0;
+        props.data.forEach(element => {
+            totalEMP+=parseInt(element['manpowers']);
+            totalCheck+=parseInt(element['total_check_in']);
+            totalNotCheck+=parseInt(element['not_check_in']);
+            NumOfDay=parseInt(element['day']);
+        });
+        let Check = ((totalCheck/(NumOfDay*totalEMP))*100).toFixed(2) + '%';
+        let NotCheck = ((totalNotCheck/(NumOfDay*totalEMP))*100).toFixed(2) + '%';
+
+        setEMP(totalEMP);
+        setCheck(Check);
+        setNotCheck(NotCheck);
+
+        console.log(totalEMP);
+        
+    },[props.data]);
+
     const classes = useStyles();
     return (
         <div
@@ -37,7 +65,7 @@ const Chart = props => {
                     Total Employees
                 </div>
                 <div className={classes.text}>
-                    265
+                    {emp}
                 </div>
 
             </Paper>
@@ -47,7 +75,7 @@ const Chart = props => {
                     Checked in
                 </div>
                 <div className={classes.text}>
-                    265
+                    {check}
                 </div>
             </Paper>
 
@@ -56,7 +84,7 @@ const Chart = props => {
                     Haven't Checked in
                 </div>
                 <div className={classes.text}>
-                    265
+                    {notCheck}
                 </div>
             </Paper>
 
