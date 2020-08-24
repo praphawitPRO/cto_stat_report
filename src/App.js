@@ -10,17 +10,26 @@ function App() {
   
     if(Object.keys(dataLogin).length === 0){
       return (
-        
         <Login />
-        
       );
     }else{
-      return (
-        <div className="App">
-          <Header />
-          <Tap />
-        </div>
-      );
+      if(dataLogin[0].department=="President, CRC's Office" || (dataLogin[0].department=="Retail Innovation" && (dataLogin[0].position=="Innovation Engineer Professional"||dataLogin[0].position=="Head of Retail Innovation"))){
+        return (
+          <div className="App">
+            <Header />
+            <Tap />
+          </div>
+        );
+
+      }else{
+        return (
+          <div className="App">
+            <Header />
+            
+          </div>
+        );
+      }
+      
     }
     
   

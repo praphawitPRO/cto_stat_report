@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import { useDispatch ,useSelector} from 'react-redux'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -9,10 +9,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import MicrosoftLogin from "react-microsoft-login";
 
 import axios from "axios";
 import cto from '../images/cto.jpg'
 
+// import ClearCache from "react-clear-cache";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,14 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
         alignContent:'center',
         marginRight:'auto',
         marginLeft:'auto',
-        marginTop:'150px',
+        marginTop:'250px',
+        marginBottom:'250px',
     },
     
     loginBtn: {
         marginTop: theme.spacing(2),
         flexGrow: 1
     }
-
 
   }),
 );
@@ -53,6 +55,7 @@ const FormPage = () => {
     // let [LoadRegis, setLoadRegis] = useState('');
 
     const dispatch = useDispatch()
+    const id = 'e79f4b1c-4a14-442b-9e32-b9ff1b7f4955'
     
     useEffect(() => {
         if (empID.trim() && surname.trim() ) {
@@ -63,17 +66,28 @@ const FormPage = () => {
         }
         
     }, [empID,surname]);
-    async function getRepAPI(username,password){
-        await axios.post('https://ctx-core.central.tech/wp-json/cgcoin/v1/login', {
-                user : username ,pass : password
+
+    const authHandler = (err, data) => {
+        if(data == undefined){
+
+        }else{
+            getRepAPI(data.authResponseWithAccessToken.idToken.claims.preferred_username);
+            console.log(err, "Data : "+ JSON.stringify(data.authResponseWithAccessToken.idToken.claims.preferred_username));
+        }
+        
+    }
+
+    async function getRepAPI(username){
+        await axios.post('https://ctx-core.central.tech/report-api/public/index.php/user/detail', {
+                email : username 
               }).then(res => {
-                if(res.data.status=="success"){
+                if(res.data[0].status=="success"){
                     dispatch({ type: 'setDataLogin' ,payload:res.data });
                     console.log(res.data);
                 }
                 // alert("");
                 setOpen(true);
-                setHelperText("incorrect password");
+                setHelperText("Incorrect email, Please sign in with the central.tech account");
                 console.log(res.data.text);
         });
     }
@@ -118,40 +132,9 @@ const FormPage = () => {
                         </div>
                         <div>
                         <form  className="px-2">
-                            <div>
-                            
-                                <TextField
-                                    fullWidth
-                                    id="username"
-                                    type="text"
-                                    label="Username"
-                                    placeholder="xxx@central.tech"
-                                    margin="normal"
-                                    onChange={(e)=>setEmpID(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    fullWidth
-                                    id="password"
-                                    type="password"
-                                    label="Password"
-                                    placeholder="Password"
-                                    margin="normal"
-                                    onChange={(e)=>setSurname(e.target.value)}
-                                    
-                                />
-                        
-                            </div>
                             
                             <div>
-                            
-                                <Button 
-                                    onClick={()=> { getRepAPI(empID,surname); }} 
-                                    className={classes.loginBtn}
-                                    disabled={isButtonDisabled}>
-                                        เข้าสู่ระบบ
-                                </Button>
+                                <MicrosoftLogin clientId={id} authCallback={authHandler} prompt={'select_account'}/>
                             </div>
                            
                         </form>
@@ -175,7 +158,7 @@ const FormPage = () => {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary" autoFocus>
-                        รับทราบ
+                            รับทราบ
                         </Button>
                     </DialogActions>
                 </Dialog>
