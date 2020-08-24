@@ -49,7 +49,7 @@ const TableUser = props => {
     const dispatch = useDispatch()
     const arrDate = useSelector(state => state.report.arrDate);
     const Data = useSelector(state => state.report.dataUser);
-
+    const dataLogin = useSelector(state => state.report.dataLogin);
     //add date to selector
     let datelist =[];
     arrDate.forEach(element => {
@@ -64,15 +64,15 @@ const TableUser = props => {
 
     let [ date, setDate ] = useState({ label: datelist[0].label, value:datelist[0].value});
     let [tableTitle,setTableTitle] = useState('Employee Reports as '+datelist[0].label); 
-    const [depart,setDepart] = useState(
-      ["ALL", "CTO Office", "Engineering", "Finance", "President, CRC's Office",
-    "Product Management", "Retail Innovation"]
-    );
-    let departlist =[];
-    depart.forEach(element => {
-      departlist.push({ label: element, value: element}) 
-    });  
-    let [ selDepart, setSelDepart ] = useState({ label: departlist[0].label, value:departlist[0].value});
+    // const [depart,setDepart] = useState(
+    //   ["ALL", "CTO Office", "Engineering", "Finance", "President, CRC's Office",
+    // "Product Management", "Retail Innovation"]
+    // );
+    // let departlist =[];
+    // depart.forEach(element => {
+    //   departlist.push({ label: element, value: element}) 
+    // });  
+    let [ selDepart, setSelDepart ] = useState({value:dataLogin[0].department});
 
     useEffect(() => {
       console.log(date.value.toString());
@@ -82,7 +82,7 @@ const TableUser = props => {
             dispatch({ type: 'setDataUser' ,payload:res.data });
             console.log(res.data);
       });
-      setSelDepart({ label: departlist[0].label, value:departlist[0].value});
+    //   setSelDepart({ label: departlist[0].label, value:departlist[0].value});
     },[date]);
 
     const selectStyles = {
@@ -175,18 +175,6 @@ const TableUser = props => {
                 options ={ datelist } 
                 value={ date }
                 defaultValue={ date }
-              />
-            </div>
-            
-            <div className={classes.box_select}>
-              <div className={classes.title}>DEPARTMENT : </div>
-              <Select  
-                className={classes.select}
-                styles={selectStyles}
-                onChange={(g) => {setSelDepart(g) }}
-                options ={ departlist } 
-                value={ selDepart }
-                defaultValue={ selDepart }
               />
             </div>
             

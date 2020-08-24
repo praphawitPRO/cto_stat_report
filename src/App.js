@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Tap from './components/tap';
+import Tap_department from './components/tap_department';
 import Header from './components/header';
 import { useSelector } from 'react-redux';
 import Login from './components/login';
@@ -25,7 +26,7 @@ function App() {
         return (
           <div className="App">
             <Header />
-            
+            <Tap_department />
           </div>
         );
       }
