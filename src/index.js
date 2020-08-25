@@ -90,7 +90,14 @@ const Reducer=(state=initialState,action)=>{
                 dataLogin:undefined,
             }
         break;
-   
+
+        case "reset_store":
+            state={
+                ...state,
+                dataLogin:[],
+            }
+        break;
+        
         default:
             
     }
@@ -99,7 +106,7 @@ const Reducer=(state=initialState,action)=>{
     
 }
 const mylogger=(store)=>(next)=>(action)=>{
-    console.log("Log action: ",action);
+    // console.log("Log action: ",action);
     next(action);
 }
 
@@ -116,7 +123,7 @@ const store = createStore(persistedReducer);
 const persistor = persistStore(store);
 // sessionService.initSessionService(store);
 store.subscribe(()=>{
-    console.log("Update Store: ",store.getState());
+    // console.log("Update Store: ",store.getState());
 })
 
 function getRepAPI(month){

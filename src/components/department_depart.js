@@ -1,15 +1,14 @@
 import React,{useState,useEffect,forwardRef } from "react";
-import MaterialTable from 'material-table';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector,useDispatch } from 'react-redux';
 import Select from 'react-select';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
-import BarChart from './charts/bar.js';
-import LineChart from './charts/line.js';
-import TableChart from './charts/table_chart.js';
-import PieChart from './charts/pie.js';
-import CardChart from './charts/card.js';
+
+import LineChart from './charts/Depart_line.js';
+import PieChart from './charts/Depart_pie.js';
+import PieChart2 from './charts/Depart_pie2.js';
+import CardChart from './charts/Depart_card.js';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -46,11 +45,12 @@ const tableIcons = {
 		ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
 		ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 	};
+
 const TableDepartment = props => {
 		const dispatch = useDispatch()
 		const arrDate = useSelector(state => state.report.arrDate);
 		const arrMonth = useSelector(state => state.report.arrMonth);
-		const Data = useSelector(state => state.report.dataDepartment);
+		const dataLogin = useSelector(state => state.report.dataLogin);
 
 		//add date to selector
 		let datelist =[];
@@ -73,26 +73,24 @@ const TableDepartment = props => {
 			const d = new Date(element)
 			const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
 			const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
-			// const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+		
 			const date = `${mo} ${ye}` ;
 			// console.log(date)
 			monthList.push({ label: date, value: element}) 
 		});
 		let [ selMonth, setSelMonth ] = useState({ label: monthList[0].label, value:monthList[0].value});
-		let [ selC, setSelC ] = useState(false);
 
 		//data chart
-		const [dataBar,setDataBar] =useState({data:[]});
 		const [dataPie,setDataPie] =useState({data:[]});
+		const [dataPie2,setDataPie2] =useState({data:[]});
 		const [dataLine,setDataLine] =useState({data:[]});
-		const [dataTable,setDataTable] =useState({data:[]});
 
 		useEffect(() => {
 			axios.post('https://ctx-core.central.tech/report-api/public/index.php/date', {
 				month : selMonth.value
 				}).then(res => {
 					dispatch({ type: 'setArrDate' ,payload:res.data.date });
-					console.log(res.data);
+					// console.log(res.data);
 			});
 			datelist =[];
 			arrDate.forEach(element => {
@@ -104,60 +102,36 @@ const TableDepartment = props => {
 				// console.log(date)
 				datelist.push({ label: date, value: element}) 
 			});
-			console.log(date.value.toString());
+			// console.log(date.value.toString());
 
-			axios.post('https://ctx-core.central.tech/report-api/public/index.php/bar_chart', {
-				month : selMonth.value
+			axios.post('https://ctx-core.central.tech/report-api/public/index.php/department/pie_chart', {
+				month : selMonth.value,
+				department : dataLogin[0].department
 				}).then(res => {
-					setDataBar({data:res.data});
-					console.log(res.data);
+					setDataPie2({data:res.data});
+					// console.log(res);
+					// console.log(res.data);
 			});
 
-			axios.post('https://ctx-core.central.tech/report-api/public/index.php/pie_chart', {
-				month : selMonth.value
-				}).then(res => {
-					setDataPie({data:res.data});
-					console.log(res);
-					console.log(res.data);
-			});
-
-			axios.post('https://ctx-core.central.tech/report-api/public/index.php/line_chart', {
-				month : selMonth.value
+			axios.post('https://ctx-core.central.tech/report-api/public/index.php/department/line_chart', {
+				month : selMonth.value,
+				department : dataLogin[0].department
 				}).then(res => {
 					setDataLine({data:res.data});
-					console.log(res);
-					console.log(res.data);
+					// console.log(res);
+					// console.log(res.data);
 			});
 
-			axios.post('https://ctx-core.central.tech/report-api/public/index.php/table_chart', {
-				month : selMonth.value
+			axios.post('https://ctx-core.central.tech/report-api/public/index.php/department/table_chart', {
+				month : selMonth.value,
+				department : dataLogin[0].department
 				}).then(res => {
-					setDataTable({data:res.data});
-					console.log(res);
-					console.log(res.data);
+					setDataPie({data:res.data});
+					// console.log(res);
+					// console.log(res.data);
 			});
-
-			
-			if(selC){
-				setSelC(false);
-				axios.post('https://ctx-core.central.tech/report-api/public/index.php/department', {
-						date : date.value
-						}).then(res => {
-							dispatch({ type: 'setDataDepartment' ,payload:res.data });
-							console.log(res.data);
-				});
-			}
 			
 		},[selMonth]);
-
-		useEffect(() => {
-			axios.post('https://ctx-core.central.tech/report-api/public/index.php/department', {
-					date : date.value
-					}).then(res => {
-						dispatch({ type: 'setDataDepartment' ,payload:res.data });
-						console.log(res.data);
-			});
-		},[date]);
 
 		const selectStyles = {
 			menu: base => ({
@@ -196,14 +170,15 @@ const TableDepartment = props => {
 				},
 				title:{
 					float:'left',
+					alignItems: 'center',
 					paddingLeft: 10,
 					width:'120px',
 					paddingTop:'.5%',
-					// paddingBottom:'.5%',
 					textAlign:'left',
 					height:'40px',
-					fontSize:14,
-					// alignItems: 'center',
+					fontSize:16,
+					fontWeight:'bold',
+					
 					
 				},
 				select:{
@@ -225,7 +200,7 @@ const TableDepartment = props => {
 					<Select  
 							className={classes.select}
 							styles={selectStyles}
-							onChange={(e) => { setSelMonth(e);setSelC(true);setTableTitle('Please select date again.'); setDate({ label: "", value:""})}}
+							onChange={(e) => { setSelMonth(e);setTableTitle('Please select date again.'); setDate({ label: "", value:""})}}
 							options ={ monthList } 
 							value={ selMonth }
 							defaultValue={ selMonth }
@@ -266,16 +241,9 @@ const TableDepartment = props => {
 									
 								}}
 							>
-								<TableChart {...dataTable}/>
+								<PieChart {...dataPie}/>
 							</div>
-							<div 
-								style={{
-									width:"100%",
-									
-								}}
-							>
-								<LineChart {...dataLine}/>
-							</div>
+	
 						
 						</div>
 						{/* container top right */}
@@ -294,15 +262,15 @@ const TableDepartment = props => {
 									// background:  '#000000',
 								}}
 							>
-								<CardChart {...dataTable}/>
+								<CardChart {...dataPie}/>
 							</div>                
 							<div 
 								style={{
 									width:"100%",
-									paddingTop:"10px",
+									// paddingTop:"10px",
 								}}
 							>
-								<PieChart {...dataPie}/>
+								<PieChart2 {...dataPie2}/>
 							</div>
 						</div>
 					</div>
@@ -311,10 +279,12 @@ const TableDepartment = props => {
 						style={{
 							display: 'flex',
 							width:"100%",
-							padding:'10px',
+							paddingBottom:'10px',
+							paddingLeft:'10px',
+							paddingRight:'10px',
 						}}
 					>
-						<BarChart {...dataBar}/>
+						<LineChart {...dataLine}/>
 					</div>
 							
 				</div>

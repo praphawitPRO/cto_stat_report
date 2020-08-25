@@ -72,7 +72,7 @@ const FormPage = () => {
 
         }else{
             getRepAPI(data.authResponseWithAccessToken.idToken.claims.preferred_username);
-            console.log(err, "Data : "+ JSON.stringify(data.authResponseWithAccessToken.idToken.claims.preferred_username));
+            // console.log(err, "Data : "+ JSON.stringify(data.authResponseWithAccessToken.idToken.claims.preferred_username));
         }
         
     }
@@ -83,12 +83,12 @@ const FormPage = () => {
               }).then(res => {
                 if(res.data[0].status=="success"){
                     dispatch({ type: 'setDataLogin' ,payload:res.data });
-                    console.log(res.data);
+                    // console.log(res.data);
                 }
                 // alert("");
                 setOpen(true);
                 setHelperText("Incorrect email, Please sign in with the central.tech account");
-                console.log(res.data.text);
+                // console.log(res.data.text);
         });
     }
  

@@ -63,7 +63,7 @@ const LineChart = props => {
                 fontSize: 8
             }
         },
-        chartArea: { width: '80%', height:'50%' },
+        chartArea: { width: '85%', height:'50%' },
         hAxis: {
             // title: 'Date',
             textStyle : {
@@ -75,10 +75,9 @@ const LineChart = props => {
         vAxis: {
             viewWindowMode:'explicit',
             viewWindow: {
-              max:300,
               min:0
             },
-            ticks: [0, 50, 100, 150, 200, 250, 300] 
+            // ticks: [0, 50, 100, 150, 200, 250, 300] 
         },
         series: {
             0: { curveType: 'function' },
@@ -91,7 +90,7 @@ const LineChart = props => {
     return (
         <Chart
             width={'100%'}
-            height={'180px'}
+            height={'200px'}
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
             data={data}

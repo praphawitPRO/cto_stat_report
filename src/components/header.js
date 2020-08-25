@@ -1,13 +1,17 @@
 import PropTypes from "prop-types"
 import React from "react"
 import "./index.css"
-const Header = ({ siteTitle }) => (
-  <header
+import { useDispatch } from 'react-redux';
+
+const Header = ({ siteTitle }) => {
+  const dispatch = useDispatch()
+  return (
+    <header
     style={{
       background:  '#000000',
       marginBottom: 0,
       height:'100%',
-      
+      display:'flex',
     }}
   >
     <div
@@ -15,8 +19,9 @@ const Header = ({ siteTitle }) => (
         alignContent:'center',
         marginTop:'auto',
         marginBottom:'auto',
-        maxWidth: 1920,
+        // maxWidth: 1920,
         padding: `0.5rem 1.0875rem`,
+        flex: '1 1 auto',
       }}
     >
       <h1 style={{ 
@@ -32,8 +37,28 @@ const Header = ({ siteTitle }) => (
         
       </h1>
     </div>
+    <div
+      style={{
+        alignContent:'top',
+        flex: '1 1 auto',
+        textAlign: "right",
+      }}
+    >
+      <button 
+      style={{
+        backgroundColor:"#000",
+        color:'#FFF',
+        fontWeight: "bold",
+      }}
+      onClick={() => dispatch({ type: "reset_store" })}>
+       log out
+      </button>
+      
+    </div>
   </header>
 )
+};
+  
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

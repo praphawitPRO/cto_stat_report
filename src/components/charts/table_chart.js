@@ -25,7 +25,7 @@ const BarChart = props => {
         });
         
         setData(arr);
-        console.log(arr);
+        // console.log(arr);
         
     },[props.data]);
 

@@ -92,7 +92,7 @@ const TableDepartment = props => {
 				month : selMonth.value
 				}).then(res => {
 					dispatch({ type: 'setArrDate' ,payload:res.data.date });
-					console.log(res.data);
+					// console.log(res.data);
 			});
 			datelist =[];
 			arrDate.forEach(element => {
@@ -104,37 +104,37 @@ const TableDepartment = props => {
 				// console.log(date)
 				datelist.push({ label: date, value: element}) 
 			});
-			console.log(date.value.toString());
+			// console.log(date.value.toString());
 
 			axios.post('https://ctx-core.central.tech/report-api/public/index.php/bar_chart', {
 				month : selMonth.value
 				}).then(res => {
 					setDataBar({data:res.data});
-					console.log(res.data);
+					// console.log(res.data);
 			});
 
 			axios.post('https://ctx-core.central.tech/report-api/public/index.php/pie_chart', {
 				month : selMonth.value
 				}).then(res => {
 					setDataPie({data:res.data});
-					console.log(res);
-					console.log(res.data);
+					// console.log(res);
+					// console.log(res.data);
 			});
 
 			axios.post('https://ctx-core.central.tech/report-api/public/index.php/line_chart', {
 				month : selMonth.value
 				}).then(res => {
 					setDataLine({data:res.data});
-					console.log(res);
-					console.log(res.data);
+					// console.log(res);
+					// console.log(res.data);
 			});
 
 			axios.post('https://ctx-core.central.tech/report-api/public/index.php/table_chart', {
 				month : selMonth.value
 				}).then(res => {
 					setDataTable({data:res.data});
-					console.log(res);
-					console.log(res.data);
+					// console.log(res);
+					// console.log(res.data);
 			});
 
 			
@@ -144,7 +144,7 @@ const TableDepartment = props => {
 						date : date.value
 						}).then(res => {
 							dispatch({ type: 'setDataDepartment' ,payload:res.data });
-							console.log(res.data);
+							// console.log(res.data);
 				});
 			}
 			
@@ -155,7 +155,7 @@ const TableDepartment = props => {
 					date : date.value
 					}).then(res => {
 						dispatch({ type: 'setDataDepartment' ,payload:res.data });
-						console.log(res.data);
+						// console.log(res.data);
 			});
 		},[date]);
 
@@ -202,7 +202,8 @@ const TableDepartment = props => {
 					// paddingBottom:'.5%',
 					textAlign:'left',
 					height:'40px',
-					fontSize:14,
+					fontSize:16,
+					fontWeight:'bold',
 					// alignItems: 'center',
 					
 				},

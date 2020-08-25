@@ -33,12 +33,12 @@ const PieChart = props => {
     return (
         <Chart
             width={'100%'}
-            height={'390px'}
+            height={'380px'}
             chartType="PieChart"
             loader={<div>Loading Chart</div>}
             data={data}
             options={{
-                chartArea: { width: '90%' },
+                chartArea: { width: '90%', height: '70%' },
                 legend: {
                     position: 'right', 
                     alignment: 'center',

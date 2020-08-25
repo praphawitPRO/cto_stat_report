@@ -75,12 +75,12 @@ const TableUser = props => {
     let [ selDepart, setSelDepart ] = useState({ label: departlist[0].label, value:departlist[0].value});
 
     useEffect(() => {
-      console.log(date.value.toString());
+      // console.log(date.value.toString());
       axios.post('https://ctx-core.central.tech/report-api/public/index.php/user', {
           date : date.value
           }).then(res => {
             dispatch({ type: 'setDataUser' ,payload:res.data });
-            console.log(res.data);
+            // console.log(res.data);
       });
       setSelDepart({ label: departlist[0].label, value:departlist[0].value});
     },[date]);
@@ -143,6 +143,7 @@ const TableUser = props => {
         textAlign:'left',
         height:'40px',
         fontSize:14,
+				fontWeight:'bold',
         // alignItems: 'center',
         
       },

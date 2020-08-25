@@ -19,10 +19,8 @@ const PieChart = props => {
         }
         // console.log( obj.wfh);
         // console.log( JSON.stringify(obj));
-        arr.push(["w@o", parseFloat(parseFloat(obj['w@o']).toFixed(2)) ]) ;
-        arr.push(["wfh", parseFloat(parseFloat(obj['wfh']).toFixed(2)) ]) ;
-        arr.push(["sick", parseFloat(parseFloat(obj['sick']).toFixed(2)) ]) ;
-        arr.push(["others", parseFloat(parseFloat(obj['others']).toFixed(2)) ]) ;
+        arr.push(["Checked in", parseFloat(parseFloat(obj['%check_in']).toFixed(2)) ]) ;
+        arr.push(["Haven't Checked in", parseFloat(parseFloat(obj['%not_check_in']).toFixed(2)) ]) ;
 
         setData(arr);
         // console.log(arr);
@@ -33,12 +31,12 @@ const PieChart = props => {
     return (
         <Chart
             width={'100%'}
-            height={'390px'}
+            height={'450px'}
             chartType="PieChart"
             loader={<div>Loading Chart</div>}
             data={data}
             options={{
-                chartArea: { width: '90%' },
+                chartArea: { width: '90%' , height: '80%' },
                 legend: {
                     position: 'right', 
                     alignment: 'center',
